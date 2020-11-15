@@ -12,7 +12,7 @@ const PizzaGridStyles = styled.div`
 
 const PizzaStyles = styled.div`
   display: grid;
-  /* Takes the row sizing not from the pizzaStyles div, but from the  PizzaGridStyles grid */
+  /* Take your row sizing not from the pizzaStyles div, but from the  PizzaGridStyles grid */
   @supports not (grid-template-rows: subgrid) {
     --rows: auto auto 1fr;
   }
@@ -43,7 +43,7 @@ export default function PizzaList({ pizzas }) {
   return (
     <PizzaGridStyles>
       {pizzas.map((pizza) => (
-        <SinglePizza pizza={pizza} key={pizza.id} />
+        <SinglePizza key={pizza.id} pizza={pizza} />
       ))}
     </PizzaGridStyles>
   );

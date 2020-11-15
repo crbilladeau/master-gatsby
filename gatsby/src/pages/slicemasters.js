@@ -37,6 +37,7 @@ const SlicemasterStyles = styled.div`
     text-align: center;
   }
 `;
+
 export default function SlicemastersPage({ data, pageContext }) {
   const slicemasters = data.slicemasters.nodes;
   return (

@@ -1,5 +1,5 @@
-import { graphql, Link, useStaticQuery } from 'gatsby';
 import React from 'react';
+import { useStaticQuery, graphql, Link } from 'gatsby';
 import styled from 'styled-components';
 
 const ToppingsStyles = styled.div`
@@ -15,6 +15,8 @@ const ToppingsStyles = styled.div`
     padding: 5px;
     background: var(--grey);
     border-radius: 2px;
+    text-decoration: none;
+    font-size: clamp(1.5rem, 1.4vw, 2.5rem);
     .count {
       background: white;
       padding: 2px 5px;
@@ -26,6 +28,7 @@ const ToppingsStyles = styled.div`
 `;
 
 function countPizzasInToppings(pizzas) {
+  // Return the pizzas with counts
   const counts = pizzas
     .map((pizza) => pizza.toppings)
     .flat()
@@ -33,14 +36,10 @@ function countPizzasInToppings(pizzas) {
       // check if this is an existing topping
       const existingTopping = acc[topping.id];
       if (existingTopping) {
-        // console.log('Existing Topping', existingTopping.name);
-        // if it is, increment it by one
+        //  if it is, increment by 1
         existingTopping.count += 1;
       } else {
-        // console.log('New Topping', topping.name);
-
-        // otherwise, create a new entry in our acc and set it to one
-
+        // otherwise create a new entry in our acc and set it to one
         acc[topping.id] = {
           id: topping.id,
           name: topping.name,
@@ -49,6 +48,7 @@ function countPizzasInToppings(pizzas) {
       }
       return acc;
     }, {});
+  // sort them based on their count
   const sortedToppings = Object.values(counts).sort(
     (a, b) => b.count - a.count
   );
@@ -56,6 +56,8 @@ function countPizzasInToppings(pizzas) {
 }
 
 export default function ToppingsFilter({ activeTopping }) {
+  // Get a list of all the toppings
+  // Get a list of all the Pizzas with their toppings
   const { toppings, pizzas } = useStaticQuery(graphql`
     query {
       toppings: allSanityTopping {
@@ -75,17 +77,22 @@ export default function ToppingsFilter({ activeTopping }) {
       }
     }
   `);
-
-  const toppingsWithCount = countPizzasInToppings(pizzas.nodes);
-  // console.log(toppingsWithCount);
+  // Count how many pizzas are in each topping
+  const toppingsWithCounts = countPizzasInToppings(pizzas.nodes);
+  // Loop over the list of toppings and display the topping and the count of pizzas in that topping
+  // Link it up.. ...  . . .
   return (
     <ToppingsStyles>
       <Link to="/pizzas">
         <span className="name">All</span>
         <span className="count">{pizzas.nodes.length}</span>
       </Link>
-      {toppingsWithCount.map((topping) => (
-        <Link to={`/topping/${topping.name}`} key={topping.id}>
+      {toppingsWithCounts.map((topping) => (
+        <Link
+          to={`/topping/${topping.name}`}
+          key={topping.id}
+          className={topping.name === activeTopping ? 'active' : ''}
+        >
           <span className="name">{topping.name}</span>
           <span className="count">{topping.count}</span>
         </Link>

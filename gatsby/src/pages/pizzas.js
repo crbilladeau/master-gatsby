@@ -8,7 +8,13 @@ export default function PizzasPage({ data, pageContext }) {
   const pizzas = data.pizzas.nodes;
   return (
     <>
-      <SEO title={pageContext.topping ? 'Pizzas With ${}' : 'All Pizzas'} />
+      <SEO
+        title={
+          pageContext.topping
+            ? `Pizzas With ${pageContext.topping}`
+            : `All Pizzas`
+        }
+      />
       <ToppingsFilter activeTopping={pageContext.topping} />
       <PizzaList pizzas={pizzas} />
     </>
@@ -32,7 +38,7 @@ export const query = graphql`
         }
         image {
           asset {
-            fixed(width: 200, height: 200) {
+            fixed(width: 600, height: 200) {
               ...GatsbySanityImageFixed
             }
             fluid(maxWidth: 400) {
