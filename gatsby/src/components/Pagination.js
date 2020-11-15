@@ -37,7 +37,6 @@ export default function Pagination({
   pageSize,
   totalCount,
   currentPage,
-  skip,
   base,
 }) {
   // make some variables
