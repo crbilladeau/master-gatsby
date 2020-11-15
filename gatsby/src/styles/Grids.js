@@ -26,7 +26,7 @@ export const ItemStyles = styled.div`
   }
   p {
     top: 0;
-    transform: rotate(-2deg) translateY(-140%);
+    transform: rotate(-2deg) translateY(-10px);
     position: absolute;
     width: 100%;
     left: 0;
